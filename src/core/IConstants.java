@@ -10,6 +10,9 @@ public interface IConstants
 	public static final int TICK_PER_SECOND = 20;
 	public static final int TICK_MILLIS = 1000/TICK_PER_SECOND;
 	
+	/*File Names*/
+	public static final String STAGE_NAME_INFO = "stagenameinfo.txt";
+	
 	/*Exit State Codes*/
 	public static final int ILLEGAL_OS_STATE = -1;
 }

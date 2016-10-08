@@ -2,8 +2,8 @@ package core;
 
 import java.util.Properties;
 
-import controllers.StageController;
 import processing.core.PApplet;
+import controllers.StageController;
 
 public class Game extends PApplet implements IConstants
 {
@@ -28,7 +28,6 @@ public class Game extends PApplet implements IConstants
 		surface.setTitle(GAME_TITLE + " - " + GAME_VERSION);
 		surface.setIcon(loadImage("icon32.png"));
 		handleOptions();
-		
 	}
 	
 	public void draw() 
@@ -49,6 +48,7 @@ public class Game extends PApplet implements IConstants
 		}
 		
 		StageController.render();
+		renderDebug();
 	}
 	
 	/*Helper Methods*/
@@ -61,6 +61,12 @@ public class Game extends PApplet implements IConstants
 		}
 	}
 	private void handleOptions() {}
+	private void renderDebug() 
+	{
+		text(StageController.getStageName(), 10, 20);
+		text("FC:"+frameCount, 10, 32);
+		text("FPS:"+(int)frameRate, 10, 44);
+	}
 	
 	/*Overriding Methods*/
 	public void mouseClicked() {}
