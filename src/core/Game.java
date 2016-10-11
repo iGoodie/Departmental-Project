@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import processing.core.PApplet;
 import controllers.StageController;
+import de.looksgood.ani.Ani;
 
 public class Game extends PApplet implements IConstants
 {
@@ -28,6 +29,10 @@ public class Game extends PApplet implements IConstants
 		surface.setTitle(GAME_TITLE + " - " + GAME_VERSION);
 		surface.setIcon(loadImage("icon32.png"));
 		handleOptions();
+		
+		Ani.init(this);
+		Ani.setDefaultEasing(Ani.LINEAR);
+		Ani.setDefaultTimeMode(Ani.SECONDS);
 	}
 	
 	public void draw() 
@@ -48,7 +53,7 @@ public class Game extends PApplet implements IConstants
 		}
 		
 		StageController.render();
-		renderDebug();
+		if(UNIVERSAL_DEBUG_MODE) renderDebug();
 	}
 	
 	/*Helper Methods*/

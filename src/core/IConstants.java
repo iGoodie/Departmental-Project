@@ -5,6 +5,7 @@ public interface IConstants
 	/*Basic Info*/
 	public static final String GAME_TITLE = "Test Game";
 	public static final String GAME_VERSION = "0.0.0";
+	public static final boolean UNIVERSAL_DEBUG_MODE = true;
 	
 	/*Timer Related*/
 	public static final int TICK_PER_SECOND = 20;
