@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,13 +10,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
+
+import processing.core.PImage;
+import core.IConstants;
+
 /**
  * Created to make I/O operations easier.
  * @author Anılcan Metinyurt
  */
-public class FileUtils 
+public class FileUtils implements IConstants
 {
-	private static String externalDataPath = System.getProperty("user.dir")+"\\data";
+	private static String externalDataPath = System.getProperty("user.dir")+"\\"+DATA_FOLDER;
 	
 	/*Checks if the files exist or not*/
 	public static boolean fileExists(String path) { return new File(path).exists(); }
@@ -111,6 +117,47 @@ public class FileUtils
 		}
 	}
 	
+	/*Writes Image file to path as PNG image*/
+	public static void writeImage(String path, BufferedImage img) { writeImage(new File(path), img); }
+	public static void writeImage(File file, BufferedImage img) 
+	{
+		try{ ImageIO.write(img, "png", file); }
+		catch(IOException e) { System.out.println("Exception while writing Image file. "+e.getMessage()); }
+	}
+	
+	/*Reads Image file from path*/
+	public static BufferedImage readImage(String path) { return readImage(new File(path)); }
+	public static BufferedImage readImage(File file) 
+	{
+		try
+		{
+			return ImageIO.read(file);
+		}
+		catch(IOException e)
+		{
+			System.out.println("Exception while reading Image. "+e.getMessage());
+			System.out.println("Returning null.");
+			return null;
+		}
+	}
+	
+	/*Writes PImage file to path as PNG image*/
+	public static void writePImage(String path, PImage img) { writePImage(new File(path), img); }
+	public static void writePImage(File file, PImage img) { writeImage(file, (BufferedImage)img.getNative()); }
+	
+	/*Reads PImage file from path*/
+	public static PImage readPImage(String path) { return readPImage(new File(path)); }
+	public static PImage readPImage(File file) 
+	{
+		BufferedImage img = readImage(file);
+		if(img!=null) return new PImage(img);
+		else
+		{
+			System.out.println("Image returned null, returning empty PImage instance.");
+			return new PImage();
+		}
+	}
+	
 	/*External Path specific methods*/
 	public static void createExternalFile(String name) { createFile(externalDataPath+"\\"+name); }
 	
@@ -121,4 +168,12 @@ public class FileUtils
 	public static void writeExternalProperties(String fileName, Properties data) { writeProperties(externalDataPath+"\\"+fileName, data); }
 
 	public static Properties readExternalProperties(String fileName) { return readProperties(externalDataPath+"\\"+fileName); }
+	
+	public static void writeExternalImage(String fileName, BufferedImage img) { writeImage(externalDataPath+"\\"+fileName, img); }
+	
+	public static BufferedImage readExternalImage(String fileName) { return readImage(externalDataPath+"\\"+fileName); }
+	
+	public static void writeExternalPImage(String fileName, PImage img) { writePImage(externalDataPath+"\\"+fileName, img); }
+	
+	public static PImage readExternalPImage(String fileName) { return readPImage(externalDataPath+"\\"+fileName); }
 }

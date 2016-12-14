@@ -2,6 +2,8 @@ package sprites;
 
 import java.util.ArrayList;
 
+import animations.Animation;
+import animations.Animations;
 import processing.core.PImage;
 import processing.core.PVector;
 import core.Game;
@@ -14,9 +16,10 @@ public class PartialSprite
 	PVector pivotPoint;
 	
 	/*Animation Controllers*/
-	ArrayList<Ani> animations = new ArrayList<>();
-	float rotationAngle;
-	float offsetX, offsetY;
+	Animations anims = new Animations(this);
+	//ArrayList<Ani> animations = new ArrayList<>();
+	public float rotationAngle;
+	public float offsetX, offsetY;
 	
 	/*Construction Methods*/
 	public PartialSprite(PImage sprite)
@@ -38,7 +41,7 @@ public class PartialSprite
 	}
 	
 	/*Non-static Methods*/
-	public void update(float dt) { updateAnimations(); }
+	public void update(float dt) { anims.updateAnis(); }
 	public void updateTick() {}
 	public void render(float x, float y)
 	{
@@ -64,19 +67,17 @@ public class PartialSprite
 	{
 		Ani.to(this, duration, "rotationAngle", rotationAngle+ang);
 	}
-	public void loopTransformationAnimation(float duration, float x, float y)
+	public void playAnimation(String name) { anims.playAnimation(name); }
+	public void putTransition(String name, float duration, float x, float y)
 	{
-		animations.add(Ani.to(this, duration, "offsetX", offsetX+x));
-		animations.add(Ani.to(this, duration, "offsetY", offsetY+y));
+		anims.putTransition(name, duration, x, y);
 	}
-	public void loopRotationAnimation(float duration, float ang)
+	public void putRotation(String name, float duration, float ang)
 	{
-		animations.add(Ani.to(this, duration, "rotationAngle", rotationAngle+ang));
+		anims.putRotation(name, duration, ang);
 	}
-	private void updateAnimations() { for(Ani a:animations) if(a.isEnded()) {a.reverse();a.start();} }
 	public void removeAnimations() 
 	{ 
-		for(Ani a:animations) a.pause();
-		animations.removeAll(animations);
+		
 	}
 }

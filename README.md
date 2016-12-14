@@ -1,3 +1,6 @@
+# What is Kevin's Inferno?
+Write something here
+
 # Current Progress
 1. Created the core class according to Processing's looping mechanism, divided loop into 3; update, tickUpdate and render.
 2. Implemented game stage controlled by StageController.
