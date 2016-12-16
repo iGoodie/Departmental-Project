@@ -36,4 +36,8 @@ public class StageController implements IConstants
 	public static void handleKey(char key, int keyCode){
 		currentStage.handleKey(key, keyCode);
 	}
+
+	public static void handleMouse(int mouse, int x, int y) {
+		currentStage.handleMouse(mouse, x, y);
+	}
 }

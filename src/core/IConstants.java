@@ -3,7 +3,7 @@ package core;
 public interface IConstants 
 {
 	/*Basic Info*/
-	public static final String GAME_TITLE = "Test Game";
+	public static final String GAME_TITLE = "Kevin's Inferno";
 	public static final String GAME_VERSION = "0.0.0";
 	public static final int ST_WIDTH=600, ST_HEIGHT=400;
 	public static final boolean UNIVERSAL_DEBUG_MODE = true;

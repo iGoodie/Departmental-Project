@@ -1,9 +1,12 @@
 package util;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,6 +15,7 @@ import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
+import processing.core.PFont;
 import processing.core.PImage;
 import core.IConstants;
 
@@ -158,6 +162,29 @@ public class FileUtils implements IConstants
 		}
 	}
 	
+	/*Reads PFont file from path*/
+	public static PFont readPFont(String path){ return readPFont(new File(path)); }
+	public static PFont readPFont(File file){
+		try{
+			//TODO: Fix
+			FileInputStream fis = new FileInputStream(file);
+			Font font = Font.createFont(Font.TRUETYPE_FONT, fis);
+			return new PFont(font, true);
+		}
+		catch(FileNotFoundException e){
+			System.out.println("Font can't be found, returning empty PFont.");
+			return new PFont();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+			return null;
+		}
+		catch(FontFormatException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/*External Path specific methods*/
 	public static void createExternalFile(String name) { createFile(externalDataPath+"\\"+name); }
 	
@@ -176,4 +203,6 @@ public class FileUtils implements IConstants
 	public static void writeExternalPImage(String fileName, PImage img) { writePImage(externalDataPath+"\\"+fileName, img); }
 	
 	public static PImage readExternalPImage(String fileName) { return readPImage(externalDataPath+"\\"+fileName); }
+	
+	public static PFont readExternalPFont(String fileName) { return readPFont(externalDataPath+"\\"+fileName); }
 }

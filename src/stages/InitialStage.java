@@ -16,5 +16,7 @@ public class InitialStage implements IStage
 
 	public void handleKey(char key, int keyCode){}
 	
+	public void handleMouse(int mouse, int x, int y){}
+	
 	public void dispose() {}
 }

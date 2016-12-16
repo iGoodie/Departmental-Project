@@ -2,8 +2,10 @@ package core;
 
 import java.util.Properties;
 
+import controllers.Fonts;
 import controllers.StageController;
 import de.looksgood.ani.Ani;
+import logic.Items;
 import processing.core.PApplet;
 
 public class Game extends LayeredRender implements IConstants {
@@ -28,6 +30,10 @@ public class Game extends LayeredRender implements IConstants {
 		surface.setIcon(loadImage("icon32.png"));
 		handleOptions();
 		
+		/*Initialize game objects*/
+		Fonts.loadFonts();
+		Items.loadItems();
+		
 		Ani.init(this);
 		Ani.setDefaultEasing(Ani.LINEAR);
 		Ani.setDefaultTimeMode(Ani.SECONDS);
@@ -39,7 +45,7 @@ public class Game extends LayeredRender implements IConstants {
 		int dt = now - frameTimer;
 		frameTimer = now;
 		
-		background(0xFF_4F0202);
+		background(0xFF_101010);
 		
 		/*Delta-time Updates*/
 		StageController.update(dt);
@@ -56,7 +62,7 @@ public class Game extends LayeredRender implements IConstants {
 		StageController.render();
 		renderByOrder();
 		if(UNIVERSAL_DEBUG_MODE) renderDebug();
-		popRender();
+		//popRender();
 	}
 	
 	/*Helper Methods*/
@@ -71,13 +77,14 @@ public class Game extends LayeredRender implements IConstants {
 		text(StageController.getStageName(), 10, 20);
 		text("FC:"+frameCount, 10, 32);
 		text("FPS:"+(int)frameRate, 10, 44);
+		text(String.format("Mouse:%d,%d", mouseX, mouseY), 10, 56);
 	}
 	
 	/*Overriding Methods*/
-	public void mousePressed() {}
+	public void mousePressed() { StageController.handleMouse(mouseButton, mouseX, mouseY); }
 	public void mouseReleased() {}
-	public void keyPressed() { StageController.handleKey(key, keyCode); }
-	public void keyReleased() {}
+	public void keyPressed() {}
+	public void keyReleased() { StageController.handleKey(key, keyCode); }
 	public void mouseWheel() {}
 	
 	/*Hand-defined Methods*/
