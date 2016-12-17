@@ -62,7 +62,7 @@ public class ItemStack {
 		Game game = Game.getInstance();
 		game.image(layerID, item.getTexture(), x, y);
 		if(amount != 1){
-			game.getLayer(layerID).textFont(Fonts.DPCOMIC);
+			game.getLayer(layerID).textFont(Fonts.DPCOMIC_20PT);
 			game.textWithStroke(layerID, "x"+amount, x+38-game.getLayer(layerID).textWidth("x"+amount), y+36, 0xFF_000000);			
 		}
 	}

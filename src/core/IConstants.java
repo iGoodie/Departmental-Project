@@ -6,7 +6,6 @@ public interface IConstants
 	public static final String GAME_TITLE = "Kevin's Inferno";
 	public static final String GAME_VERSION = "0.0.0";
 	public static final int ST_WIDTH=600, ST_HEIGHT=400;
-	public static final boolean UNIVERSAL_DEBUG_MODE = true;
 	
 	/*Timer Related*/
 	public static final int TICK_PER_SECOND = 20;

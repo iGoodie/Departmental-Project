@@ -1,0 +1,5 @@
+//name	type	TextureName	maxStack	ATK+	DEF+	MagicPts	HP+	Mana+	Metadata	Description
+Cleaver	3	cleaver	1	10	0	0	0	0	0	Some sort of weapon.
+Test Item	8	item0	99	0	0	0	0	0	5	Test description.
+Claw	9	claw	1	0	0	0	0	0	0	Demon claw.
+Wing1	2	wing1	99	0	0	0	0	0	0	Beginner's wing.

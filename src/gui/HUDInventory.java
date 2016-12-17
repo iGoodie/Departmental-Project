@@ -166,17 +166,17 @@ public class HUDInventory {
 
 	public static void renderItemBorder(int index){
 		PVector itemPos = getItemPos(index);
-		Game.getInstance().image(1, selector, itemPos.x, itemPos.y);
+		Game.getInstance().image(2, selector, itemPos.x, itemPos.y);
 	}
 	
 	public static void render() {
 		Game game = Game.getInstance();
-		game.image(1, invBg, pos.x, pos.y);
+		game.image(2, invBg, pos.x, pos.y);
 		for(int r=0; r<items.length; r++){
 			for(int c=0; c<items[0].length; c++){
 				if(items[r][c] != null){
 					PVector pos = getItemPos(r, c);
-					items[r][c].render(1, pos.x, pos.y);
+					items[r][c].render(2, pos.x, pos.y);
 				}
 			}
 		}

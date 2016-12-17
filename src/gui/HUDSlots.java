@@ -95,6 +95,7 @@ public class HUDSlots {
 		if(MouseContainer.grabbedFrom() == MouseContainer.INVENTORY){ //Got from Inventory?
 			if(isSlotEmpty(clickedIndex)){ //Is Slot Empty?
 				if(doesTypeMatch(MouseContainer.getItem(), clickedIndex)){ // Type Match?
+					HUDLogger.setMessage(HUDLogger.INFO, MouseContainer.getItem().getName()+" equiped.");
 					setSlot(MouseContainer.getItem(), clickedIndex);
 					MouseContainer.decreaseAmount(1);
 					return;
@@ -102,6 +103,7 @@ public class HUDSlots {
 			}
 			else{ // Isn't slot empty?
 				if(doesTypeMatch(MouseContainer.getItem(), clickedIndex)){
+					HUDLogger.setMessage(HUDLogger.INFO, MouseContainer.getItem().getName()+" equiped.");
 					HUDInventory.setItemStack(MouseContainer.getGotIndex(), new ItemStack(clickedItem, 1));
 					setSlot(MouseContainer.getItem(), clickedIndex);
 					MouseContainer.nullify();
@@ -119,23 +121,23 @@ public class HUDSlots {
 		if(clickedIndex != -1){
 			Item clickedItem = getSlot(clickedIndex);
 			if(clickedItem != null){
-				MouseContainer.setContainer(MouseContainer.SLOTS, new ItemStack(clickedItem, 1), clickedIndex);				
+				MouseContainer.setContainer(MouseContainer.SLOTS, new ItemStack(clickedItem, 1), clickedIndex);
 			}
 		}
 	}
 	
 	public static void renderItemBorder(int index){
 		PVector itemPos = getSlotPos(index);
-		Game.getInstance().image(1, selector, itemPos.x, itemPos.y);
+		Game.getInstance().image(2, selector, itemPos.x, itemPos.y);
 	}
 
 	public static void render(){
 		Game game = Game.getInstance();
-		game.image(1, bgStats, pos.x, pos.y);
+		game.image(2, bgStats, pos.x, pos.y);
 		for(int i=0; i<slots.length; i++){
 			if(slots[i] != null){
 				PVector pos = getSlotPos(i);
-				slots[i].render(1, pos.x, pos.y);
+				slots[i].render(2, pos.x, pos.y);
 			}
 		}
 	}

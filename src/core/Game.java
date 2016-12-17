@@ -1,10 +1,13 @@
 package core;
 
+import java.awt.event.KeyEvent;
 import java.util.Properties;
 
 import controllers.Fonts;
+import controllers.MouseCursors;
 import controllers.StageController;
 import de.looksgood.ani.Ani;
+import gui.HUDLogger;
 import logic.Items;
 import processing.core.PApplet;
 
@@ -14,6 +17,7 @@ public class Game extends LayeredRender implements IConstants {
 	public static Game getInstance() { return instance; }
 	
 	/*Fields*/
+	public static boolean UNIVERSAL_DEBUG_MODE = true;
 	Properties generalOptions;
 	int tickTimer=0, frameTimer=0;
 	
@@ -31,12 +35,15 @@ public class Game extends LayeredRender implements IConstants {
 		handleOptions();
 		
 		/*Initialize game objects*/
+		MouseCursors.loadCursors();
 		Fonts.loadFonts();
 		Items.loadItems();
 		
 		Ani.init(this);
 		Ani.setDefaultEasing(Ani.LINEAR);
 		Ani.setDefaultTimeMode(Ani.SECONDS);
+		
+		MouseCursors.changeCursor(0);
 	}
 	
 	public void draw(){
@@ -45,8 +52,10 @@ public class Game extends LayeredRender implements IConstants {
 		int dt = now - frameTimer;
 		frameTimer = now;
 		
+		/*Rendering Initializers*/
 		background(0xFF_101010);
-		
+		pushRender();
+
 		/*Delta-time Updates*/
 		StageController.update(dt);
 		
@@ -56,8 +65,7 @@ public class Game extends LayeredRender implements IConstants {
 			tickTimer = now;
 		}
 		
-		/*Renders*/
-		pushRender();
+		/*Actual Rendering*/
 		resetLayers();
 		StageController.render();
 		renderByOrder();
@@ -81,10 +89,25 @@ public class Game extends LayeredRender implements IConstants {
 	}
 	
 	/*Overriding Methods*/
-	public void mousePressed() { StageController.handleMouse(mouseButton, mouseX, mouseY); }
+	public void mousePressed() { 
+		int clickedLayer = getClickedLayerIndex(mouseX, mouseY);
+		StageController.handleMouse(clickedLayer, mouseButton, mouseX, mouseY);
+	}
 	public void mouseReleased() {}
 	public void keyPressed() {}
-	public void keyReleased() { StageController.handleKey(key, keyCode); }
+	public void keyReleased() {
+		if(key == CODED){
+			if(keyCode == KeyEvent.VK_F11){
+				UNIVERSAL_DEBUG_MODE = !UNIVERSAL_DEBUG_MODE;
+				HUDLogger.setMessage(HUDLogger.SYSTEM_DEBUG, "Toggled debug mode.");
+			}
+			else if(keyCode == KeyEvent.VK_F10){
+				HUDLogger.digitalFormat = !HUDLogger.digitalFormat;
+				HUDLogger.setMessage(HUDLogger.SYSTEM_DEBUG, "Clock mode changed.");
+			}
+		}
+		StageController.handleKey(key, keyCode); 
+	}
 	public void mouseWheel() {}
 	
 	/*Hand-defined Methods*/
