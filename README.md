@@ -19,9 +19,13 @@ Kevin is a mortal trying to live in hard conditions. He has to pay his bills, an
 
 ### **Debug Shortcuts for Current Version**
 > R: Spawn a random Cursed Body at random World Coord
+
 > F8: Save current state
+
 > F9: Generate random item
+
 > F10: Change timestamp type
+
 > F11: Toggle debug-mode
 
 
