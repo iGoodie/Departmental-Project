@@ -29,6 +29,7 @@ Kevin is a mortal trying to live in hard conditions. He has to pay his bills, an
 ## **Credits**
 #### **Programming**
 - *Anılcan Metinyurt:* Lead Programmer
+
 #### **Arts**
 - *Khamidova:* Lead Artist
 - *Mustafa Şibintay:* Artist & dankmemer
