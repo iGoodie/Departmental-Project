@@ -4,8 +4,10 @@ import java.util.Calendar;
 
 import controllers.Fonts;
 import core.Game;
+import processing.core.PGraphics;
 
 public class HUDLogger {
+	static final int LAYER = 2;
 	public static final String SYSTEM = "System";
 	public static final String SYSTEM_DEBUG = "System-Debug";
 	public static final String INFO = "Information";
@@ -61,18 +63,18 @@ public class HUDLogger {
 	}
 	
 	public static void render(){
-		Game game = Game.getInstance();
-		game.pushStyle();
-		game.getLayer(2).textFont(Fonts.NERVOUS_12PT);
-		game.text(2, header, 18+(102-game.getLayer(2).textWidth(header))/2, 380);
-		game.getLayer(2).textFont(Fonts.PIXELFJVERDANA_6PT);
-		game.text(2, message, 130, 378);
+		PGraphics gameLayer = Game.getInstance().getLayer(LAYER);
+		gameLayer.pushStyle();
+		gameLayer.textFont(Fonts.NERVOUS_12PT);
+		gameLayer.text(header, 18+(102-gameLayer.textWidth(header))/2, 380);
+		gameLayer.textFont(Fonts.PIXELFJVERDANA_6PT);
+		gameLayer.text(message, 130, 378);
 		if(digitalFormat){
-			game.text(2, formatTime(), 530, 378);
+			gameLayer.text(formatTime(), 530, 378);
 		}
 		else{			
-			game.text(2, formatTime(), 520, 378);
+			gameLayer.text(formatTime(), 520, 378);
 		}
-		game.popStyle();
+		gameLayer.popStyle();
 	}
 }

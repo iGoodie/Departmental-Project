@@ -7,7 +7,9 @@ public interface IStage
 	public void update(int dt);
 	public void updateTick();
 	public void render();
-	public void handleKey(char key, int keyCode);
-	public void handleMouse(int layerClicked, int mouse, int x, int y);
 	public void dispose();
+	
+	//Handled once
+	public void handleKeyRelease(char key, int keyCode);
+	public void handleMousePressed(int layerClicked, int mouse, int x, int y);
 }

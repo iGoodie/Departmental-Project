@@ -8,7 +8,7 @@ public interface IConstants
 	public static final int ST_WIDTH=600, ST_HEIGHT=400;
 	
 	/*Timer Related*/
-	public static final int TICK_PER_SECOND = 20;
+	public static final int TICK_PER_SECOND = 2;
 	public static final int TICK_MILLIS = 1000/TICK_PER_SECOND;
 	
 	/*File Names*/

@@ -2,6 +2,7 @@ package logic;
 
 import controllers.Fonts;
 import core.Game;
+import logic.elements.Item;
 
 public class ItemStack {
 	static final ItemStack INVALID = new ItemStack(null, -1);

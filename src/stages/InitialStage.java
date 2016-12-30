@@ -14,9 +14,9 @@ public class InitialStage implements IStage
 	
 	public void render() {}
 
-	public void handleKey(char key, int keyCode){}
+	public void handleKeyRelease(char key, int keyCode){}
 	
-	public void handleMouse(int layerClicked, int mouse, int x, int y){}
+	public void handleMousePressed(int layerClicked, int mouse, int x, int y){}
 	
 	public void dispose() {}
 }

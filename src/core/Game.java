@@ -3,12 +3,15 @@ package core;
 import java.awt.event.KeyEvent;
 import java.util.Properties;
 
+import animations.Animations;
 import controllers.Fonts;
+import controllers.Items;
+import controllers.Keyboard;
 import controllers.MouseCursors;
 import controllers.StageController;
+import controllers.Tiles;
 import de.looksgood.ani.Ani;
 import gui.HUDLogger;
-import logic.Items;
 import processing.core.PApplet;
 
 public class Game extends LayeredRender implements IConstants {
@@ -29,7 +32,7 @@ public class Game extends LayeredRender implements IConstants {
 	}
 	
 	public void setup(){
-		initializeLayers(16);
+		initializeLayers(3 + 2);
 		surface.setTitle(GAME_TITLE + " - " + GAME_VERSION);
 		surface.setIcon(loadImage("icon32.png"));
 		handleOptions();
@@ -38,6 +41,8 @@ public class Game extends LayeredRender implements IConstants {
 		MouseCursors.loadCursors();
 		Fonts.loadFonts();
 		Items.loadItems();
+		Tiles.loadTiles();
+		Animations.loadAnimations();
 		
 		Ani.init(this);
 		Ani.setDefaultEasing(Ani.LINEAR);
@@ -53,8 +58,8 @@ public class Game extends LayeredRender implements IConstants {
 		frameTimer = now;
 		
 		/*Rendering Initializers*/
-		background(0xFF_101010);
 		pushRender();
+		background(0xFF_101010);
 
 		/*Delta-time Updates*/
 		StageController.update(dt);
@@ -66,11 +71,16 @@ public class Game extends LayeredRender implements IConstants {
 		}
 		
 		/*Actual Rendering*/
+		setViewportScale(0.5f);
 		resetLayers();
 		StageController.render();
 		renderByOrder();
 		if(UNIVERSAL_DEBUG_MODE) renderDebug();
 		//popRender();
+	}
+
+	public void terminate(){
+		exit();
 	}
 	
 	/*Helper Methods*/
@@ -86,6 +96,7 @@ public class Game extends LayeredRender implements IConstants {
 		text("FC:"+frameCount, 10, 32);
 		text("FPS:"+(int)frameRate, 10, 44);
 		text(String.format("Mouse:%d,%d", mouseX, mouseY), 10, 56);
+		text("ARGB: "+hex(getGraphics().get(mouseX, mouseY)).replaceFirst("FF", "FF_"), 10, 68);
 	}
 	
 	/*Overriding Methods*/
@@ -94,8 +105,14 @@ public class Game extends LayeredRender implements IConstants {
 		StageController.handleMouse(clickedLayer, mouseButton, mouseX, mouseY);
 	}
 	public void mouseReleased() {}
-	public void keyPressed() {}
+	public void keyPressed() {
+		Keyboard.setKeyPressed(key, keyCode);
+		if(key==ESC){
+			key=0;
+		}
+	}
 	public void keyReleased() {
+		Keyboard.setKeyReleased(key, keyCode);
 		if(key == CODED){
 			if(keyCode == KeyEvent.VK_F11){
 				UNIVERSAL_DEBUG_MODE = !UNIVERSAL_DEBUG_MODE;

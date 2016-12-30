@@ -1,4 +1,0 @@
-Initial Stage
-Main Menu Stage
-In-game Stage
-Loading Stage

@@ -2,57 +2,67 @@ package animations;
 
 import java.util.HashMap;
 
-import de.looksgood.ani.Ani;
-import sprites.PartialSprite;
+import util.FileUtils;
 
-public class Animations 
-{
-	PartialSprite p;
-	String cur;
-	//Animation cur = new Animation();
-	HashMap<String, Animation> anims = new HashMap<>();
-	public Animation getAnimation(String name) { return anims.get(name);}
-	public String currentAnimation() { return cur; }
-
-	public Animations(PartialSprite parent) { p=parent; }
-
-	public void putTransition(String name, float duration, float x, float y) 
-	{
-		if(anims.containsKey(name))
-			anims.get(name).putTransition(p, duration, x, y);
-		else{
-			Animation a = new Animation();
-			a.putTransition(p, duration, x, y);
-			anims.put(name, a);
+public class Animations {
+	static HashMap<String, BasicAnimation> basicAnims = new HashMap<>();
+	
+	public static BasicAnimation getAnimation(String name){
+		return basicAnims.get(name);
+	}
+	
+	private static int[] parseIntArray(String array){
+		String[] elems = array.split(",");
+		int[] arr = new int[elems.length];
+		for(int i=0; i<elems.length; i++){
+			arr[i] = Integer.parseInt(elems[i]);
 		}
+		return arr;
 	}
-
-	public void putRotation(String name, float duration, float ang) 
-	{
-		if(anims.containsKey(name))
-			anims.get(name).putRotation(p, duration, ang);
-		else {
-			Animation a = new Animation();
-			a.putRotation(p, duration, ang);
-			anims.put(name, a);
+	
+	private static float[] parseFloatArray(String array){
+		String[] elems = array.split(",");
+		float[] arr = new float[elems.length];
+		for(int i=0; i<elems.length; i++){
+			arr[i] = Float.parseFloat(elems[i]);
 		}
+		return arr;
 	}
-
-	public void playAnimation(String name) 
-	{
-		if(!anims.containsKey(name)) return;
-		if(cur!=null) anims.get(cur).stopAnis();
-		cur = name;
-		anims.get(name).pushAnis(); 
-	}
-
-	public void updateAnis() {
-		for(Object an:anims.values().toArray()) {
-			for(Ani a:((Animation)an).getKeyAnimations()){
-				if(a.isEnded()){
-					a.reverse();
-					a.start();
+	
+	public static void loadAnimations(){
+		String[] lines = FileUtils.readExternalString("animationinfo.txt").split("\n");
+		for(int i=0; i<lines.length; i++){
+			if(!lines[i].startsWith("//")){
+				String[] cells = lines[i].split("\t");
+				boolean tx=cells[0].contains("T"), 
+						ty=cells[0].contains("t"), 
+						sx=cells[0].contains("S"),
+						sy=cells[0].contains("s"), 
+						r=cells[0].contains("r");
+				BasicAnimation anim = new BasicAnimation(sx||sy, tx||ty, r);
+				if(tx || ty){
+					anim.setTranslateTimes(parseIntArray(cells[2]));
 				}
+				if(tx){
+					anim.setTranslateXValues(parseFloatArray(cells[5]));
+				}
+				if(ty){
+					anim.setTranslateYValues(parseFloatArray(cells[6]));
+				}
+				if(sx || sy){
+					anim.setScaleTimes(parseIntArray(cells[3]));
+				}
+				if(sx){
+					anim.setScaleXValues(parseFloatArray(cells[7]));
+				}
+				if(sy){
+					anim.setScaleYValue(parseFloatArray(cells[8]));
+				}
+				if(r){
+					anim.setRotationTimes(parseIntArray(cells[4]));
+					anim.setRotationValues(parseFloatArray(cells[9]));
+				}
+				basicAnims.put(cells[1], anim);
 			}
 		}
 	}

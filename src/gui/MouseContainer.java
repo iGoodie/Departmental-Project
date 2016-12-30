@@ -1,7 +1,7 @@
 package gui;
 
-import logic.Item;
-import logic.ItemStack;
+import logic.elements.Item;
+import logic.elements.ItemStack;
 
 public final class MouseContainer {
 	public static final int //from

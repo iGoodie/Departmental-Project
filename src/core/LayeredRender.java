@@ -12,8 +12,11 @@ public class LayeredRender extends PApplet {
 
 	public void initializeLayers(int layerSize) {
 		layers = new PGraphics[layerSize];
-		for(int i=0; i<layerSize; i++) {
+		for(int i=0; i<3; i++) {
 			layers[i]=createGraphics(width, height);
+		}
+		for(int i=3; i<layerSize; i++) {
+			layers[i]=createGraphics(428, 292);
 		}
 	}
 	
@@ -25,7 +28,11 @@ public class LayeredRender extends PApplet {
 	}
 	
 	public void renderByOrder() {
-		for(int i=layers.length-1; i>=0; i--){
+		for(int i=layers.length-1; i>=3; i--){
+			image(layers[i], 18, 18);
+			layers[i].endDraw();
+		}
+		for(int i=2; i>=0; i--){
 			image(layers[i], 0, 0);
 			layers[i].endDraw();
 		}
@@ -57,12 +64,22 @@ public class LayeredRender extends PApplet {
 		return layers.length-1;
 	}
 	
+	public boolean isClickedLayerPopup(int x, int y){
+		return layers[0].get(x, y) != EMPTY_PIXEL;
+	}
+	
+	public void setViewportScale(float n){
+		for(int i=3; i<layers.length; i++){
+			layers[i].scale(n);
+		}
+	}
+	
 	/*Rendering Methods*/
 	public void image(int layerIndex, PImage img, float a, float b) {
 		layers[layerIndex].image(img, a, b);
 	}
 	
-	public void imageCropped(int layerIndex, PImage img, int x, int y, int w, int h){
+	public void imageCropped(int layerIndex, PImage img, float x, float y, int w, int h){
 		PImage imgC = img.get(0, 0, w, h);
 		layers[layerIndex].image(imgC, x, y);
 	}

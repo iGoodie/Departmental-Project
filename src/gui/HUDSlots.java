@@ -1,8 +1,9 @@
 package gui;
 
 import core.Game;
-import logic.Item;
-import logic.ItemStack;
+import logic.elements.Item;
+import logic.elements.ItemStack;
+import physics.HitTestBasic;
 import processing.core.PImage;
 import processing.core.PVector;
 import util.FileUtils;
@@ -41,11 +42,11 @@ public class HUDSlots {
 	public static void setSlot(Item item, int index){
 		slots[index] = item;
 	}
-	
+
 	public static void removeSlot(int index){
 		slots[index] = null;
 	}
-	
+
 	public static int equipableSlot(ItemStack item){
 		int type = item.getType();
 		for(int i=0; i<slots.length; i++){ //Iterate slots
@@ -59,7 +60,62 @@ public class HUDSlots {
 	public static boolean doesTypeMatch(Item item, int index){
 		return item.getType() == slotTypes[index];
 	}
-	
+
+	public static int totalAtkBonus(){
+		int sum = 0;
+		for(int i=0; i<slots.length; i++){
+			Item item = slots[i];
+			if(item != null){
+				sum += item.getAtk();
+			}
+		}
+		return sum;
+	}
+
+	public static int totalDefBonus(){
+		int sum = 0;
+		for(int i=0; i<slots.length; i++){
+			Item item = slots[i];
+			if(item != null){
+				sum += item.getDef();
+			}
+		}
+		return sum;
+	}
+
+	public static int totalHpBonus(){
+		int sum = 0;
+		for(int i=0; i<slots.length; i++){
+			Item item = slots[i];
+			if(item != null){
+				sum += item.getHp();
+			}
+		}
+		return sum;
+	}
+
+	public static int totalManaBonus(){
+		int sum = 0;
+		for(int i=0; i<slots.length; i++){
+			Item item = slots[i];
+			if(item != null){
+				sum += item.getMana();
+			}
+		}
+		return sum;
+	}
+
+	public static int totalMagicPtsBonus(){
+		int sum = 0;
+		for(int i=0; i<slots.length; i++){
+			Item item = slots[i];
+			if(item != null){
+				sum += item.getMagicPts();
+			}
+		}
+		return sum;
+	}
+
 	public static boolean isSlotEmpty(int index){
 		return slots[index] == null;
 	}
@@ -67,7 +123,7 @@ public class HUDSlots {
 	public static boolean isEquipable(Item item, int index){
 		return isSlotEmpty(index) && doesTypeMatch(item, index);
 	}
-	
+
 	public static boolean isMouseOnGrid(int x, int y){
 		if(x >= pos.x && x <= pos.x+bgStats.width){
 			if(y >= pos.y+20 && y <= pos.y+bgStats.height){
@@ -77,7 +133,7 @@ public class HUDSlots {
 		return false;
 	}
 
-	private static int posToIndex(float mouseX, float mouseY){
+	private static int posToIndex(int mouseX, int mouseY){
 		for(int i=0; i<slots.length; i++){
 			PVector pos = getSlotPos(i);
 			if(mouseX >= pos.x && mouseX <= pos.x+40){
@@ -87,6 +143,16 @@ public class HUDSlots {
 			}
 		}
 		return -1;
+	}
+
+	public static Item getHoveredItem(int x, int y){
+		for(int i=0; i<slots.length; i++){
+			PVector pos = getSlotPos(i);
+			if(HitTestBasic.pointVsRect(x, y, pos.x, pos.y, 40, 40)){
+				return getSlot(i);
+			}
+		}
+		return null;
 	}
 
 	public static void mouseClickedPut(int x, int y) {
@@ -112,7 +178,7 @@ public class HUDSlots {
 			}
 		}
 		if(MouseContainer.grabbedFrom() == MouseContainer.SLOTS){ //Got from Slots?
-			
+
 		}
 	}
 
@@ -125,7 +191,18 @@ public class HUDSlots {
 			}
 		}
 	}
-	
+
+	public static void handleMouseStand(int x, int y){
+		if(Game.getInstance().getClickedLayerIndex(x, y) == 2 && !Game.getInstance().isClickedLayerPopup(x, y)){
+			if(isMouseOnGrid(x, y) && MouseContainer.isEmpty()){
+				Item hoveredItem = getHoveredItem(x, y);
+				if(hoveredItem != null){
+					HUDTooltip.renderTooltip(hoveredItem.getName(), x-10, y-5, 1);
+				}
+			}
+		}
+	}
+
 	public static void renderItemBorder(int index){
 		PVector itemPos = getSlotPos(index);
 		Game.getInstance().image(2, selector, itemPos.x, itemPos.y);
