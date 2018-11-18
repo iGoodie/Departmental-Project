@@ -1,0 +1,16 @@
+//name	type	TextureName	SpriteName	maxStack	ATK+	DEF+	MagicPts	HP+	Mana+	Metadata	Description
+Cleaver	3	CleaverItem	spr1,spr1	1	10	0	0	0	0	0	Some sort of weapon.
+Axe	3	axe	spr1,spr1	1	15	0	0	0	0	0	Some sort of weapon.
+UNEXPECTED KATANA	3	katana	spr1,spr1	1	25	0	10	0	0	0	Some sort of weapon.
+Claw	9	claw	spr1,spr1	99	0	0	0	0	0	0	Demon claw.
+Angelic Wings	2	wing1	spr1,spr1	1	0	5	10	0	0	0	Beginner's wing.
+Large Heath Pot	8	HealthPotL	spr1,spr1	99	0	0	0	0	0	20	Heals for a large amount.
+Medium Heath Pot	8	HealthPotM	spr1,spr1	99	0	0	0	0	0	15	Heals some health.
+Small Heath Pot	8	HealthPotS	spr1,spr1	99	0	0	0	0	0	10	Heals for a small amount.
+Large Mana Pot	8	ManaPotL	spr1,spr1	99	0	0	0	0	0	20	Recovers a large amount of mana.
+Medium Mana Pot	8	ManaPotM	spr1,spr1	99	0	0	0	0	0	15	Recovers some mana.
+Small Mana Pot	8	ManaPotS	spr1,spr1	99	0	0	0	0	0	10	Recovers a small amount of mana.
+Leather Helmet	1	LeatherHelmImg	LeatherHelm,LeatherHelmBack	1	10	10	0	0	0	0	Desc.
+Leather Armor	4	LeatherArmorImg	LeatherArmor,LeatherArmorBack	1	0	10	0	20	0	0	Desc.
+Leather Gloves	5	LeatherGlovesImg	LeatherGauntlets,LeatherGauntletsBack	1	5	10	0	0	0	0	Desc.
+Leather Boots	7	LeatherBootsImg	LeatherBoots,LeatherBootsBack	1	0	10	0	0	10	0	Desc.

@@ -1,0 +1,4 @@
+//Texture	Type
+OfficeGround	0
+OfficeWall	1
+OfficeCorner	2

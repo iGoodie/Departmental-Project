@@ -69,8 +69,7 @@ public class FileUtils implements IConstants
 	
 	/*Reads String data from file or path*/
 	public static String readString(String path) { return readString(new File(path)); }
-	public static String readString(File file)
-	{		
+	public static String readString(File file) {		
 		try
 		{
 			BufferedReader br = new BufferedReader(new FileReader(file));
